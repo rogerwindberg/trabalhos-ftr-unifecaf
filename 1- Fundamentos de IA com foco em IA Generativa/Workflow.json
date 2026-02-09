@@ -1,0 +1,213 @@
+{
+  "name": "Seu Primeiro Copiloto de IA: Criando uma Solução Inteligente com IA Generativa",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -112,
+        96
+      ],
+      "id": "0d9c6232-7c74-49aa-b229-4ada69c1ae97",
+      "name": "When chat message received",
+      "webhookId": "bd9eaa54-425a-40a1-acf9-77fb8c6a4729"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('When chat message received').item.json.chatInput }}",
+        "options": {
+          "systemMessage": "=Você é um assistente especializado em comunicação interna da empresa {{ $json.empresa }}. Sua missão é transformar rascunhos em textos profissionais e assertivos, como e-mails, resumos de reunião, mensagens para WhatsApp corporativo e avisos\ninstitucionais.\nDiretrizes:\n- Use sempre a norma culta, mas adapte o tom conforme solicitado.\n- Para WhatsApp: Use emojis moderadamente e quebras de linha para leitura rápida.\n- Para E-mail: Inclua um campo 'Assunto:' criativo e profissional.\n- Para Avisos: Seja direto e use bullet points para informações cruciais (data, hora, local).\n- Certifique-se de que o usuário forneça três variáveis essenciais:\n1. Contexto/Tópicos: O que precisa ser dito? (ex: \"Festa da firma sexta às 18h, levar 1kg de alimento\").\n2. Formato: É um E-mail, WhatsApp ou Aviso no Mural?\n3. Tom de voz: Formal, Amigável, Urgente ou Inspirador?"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        336,
+        96
+      ],
+      "id": "c0f26c23-096b-4397-a155-282e3eddab76",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        480,
+        320
+      ],
+      "id": "acc07f4e-13e4-4222-8e2d-b73050459f8d",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "60ea0d36-8b7b-4e6e-8891-7284f35fbd76",
+              "name": "empresa",
+              "value": "UniFECAF",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        112,
+        96
+      ],
+      "id": "0d7aa8be-3160-461d-ab57-78e172f1637f",
+      "name": "Empresa"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        320,
+        320
+      ],
+      "id": "4ba0b1e3-e23a-4719-9a67-74f1429fa9cb",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "r4AJwxX6gvrcrrJ3",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "### Matéria:\nFundamentos de IA com foco em IA Generativa\n### Título:\nSeu Primeiro Copiloto de IA: Criando uma Solução Inteligente com IA Generativa\n### Desafio:\nVocê foi convidado por uma empresa de comunicação interna para idealizar uma solução que auxilie colaboradores a escrever textos mais rápidos e assertivos no dia a dia, como e-mails, resumos de reunião, mensagens para WhatsApp corporativo e avisos institucionais. O RH está sobrecarregado com demandas repetitivas e percebeu que pode ganhar tempo com uma ferramenta de IA Generativa. Sua missão é prototipar e apresentar uma solução que utilize modelos de linguagem (LLMs) com prompt engineering para automatizar esse tipo de tarefa. A ferramenta pode ser uma automação usando Make.com, Zapier, Notion AI, ChatGPT (API) ou outra de sua escolha, desde que não exija programação complexa.\nO objetivo é você criar um assistente inteligente que, a partir de inputs simples do usuário (como tópicos, tipo de texto e tom de voz desejado), gere automaticamente mensagens corporativas coerentes, bem escritas e com identidade organizacional.\n",
+        "height": 368,
+        "width": 640,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -832,
+        -96
+      ],
+      "typeVersion": 1,
+      "id": "2cfefe42-aa0f-4c4b-a52f-e845cbd5ee54",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "### ENTREGÁVEL E DISTRIBUIÇÃO DA PONTUAÇÃO:\n1. Vídeo Pitch – até 4 minutos (2,0 pontos)\nGrave um vídeo explicando sua solução, incluindo:\n- Qual problema foi resolvido -> RH sobrecarregado com demandas repetitivas\n- Quais ferramentas usou -> Docker Desktop + n8n + OpenAI API\n- Como aplicou IA Generativa (ex: prompts, automações, plugins)\n- Demonstração da solução em funcionamento\n- Link deve ser público ou não listado (YouTube, Loom, Google Drive etc.)",
+        "height": 208,
+        "width": 640
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -832,
+        288
+      ],
+      "typeVersion": 1,
+      "id": "c2122640-6a1f-4b22-9d0c-81c519e67082",
+      "name": "Sticky Note1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Empresa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "Empresa": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "1a3290ab-cb00-4584-83b3-874dfbd15cdd",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0ac306ca5e430d49141df10fae66efd5aee922535fbff1d40db413b6ce1c0a2c"
+  },
+  "id": "39bJgtOglnopJGzkp8GZv",
+  "tags": [
+    {
+      "updatedAt": "2026-02-08T05:07:59.770Z",
+      "createdAt": "2026-02-08T05:07:59.770Z",
+      "id": "4FvGvAfpPjKWoN2k",
+      "name": "FTR"
+    },
+    {
+      "updatedAt": "2026-02-08T05:08:08.209Z",
+      "createdAt": "2026-02-08T05:08:08.209Z",
+      "id": "cfWiGbHwONil262i",
+      "name": "UNIFECAF"
+    },
+    {
+      "updatedAt": "2026-02-08T05:08:03.492Z",
+      "createdAt": "2026-02-08T05:08:03.492Z",
+      "id": "xySsIvGeAhM3Yi3B",
+      "name": "ROCKETSEAT"
+    }
+  ]
+}
